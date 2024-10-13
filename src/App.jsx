@@ -4,8 +4,6 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Card from "./components/Card";
-import { IoOpenSharp } from "react-icons/io5";
-import { DiVisualstudio } from "react-icons/di";
 
 function App() {
   const [api, setApi] = useState([]);
