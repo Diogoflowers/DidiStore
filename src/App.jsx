@@ -4,6 +4,9 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Card from "./components/Card";
+import iconCart from "./img/compras-online.png";
+import iconVerificate from "./img/verificar.png";
+import { IconsManifest } from "react-icons";
 
 function App() {
   const [api, setApi] = useState([]);
@@ -12,6 +15,7 @@ function App() {
   const [contCart, setContCart] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [totalCart, setTotalCart] = useState(0);
+  const [modalBuy, setModalBuy] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,6 +59,9 @@ function App() {
   };
 
   const addCart = (item) => {
+    if (modalBuy == true) {
+      setModalBuy(false);
+    }
     const verificarArray = buyCart.some(
       (itemNew) => itemNew.title === item.title
     );
@@ -100,6 +107,13 @@ function App() {
     setTotalCart(total);
   };
 
+  const btnBuy = () => {
+    const newArray = [];
+    setBuyCart(newArray);
+    setContCart(0);
+    setModalBuy(true);
+  };
+
   return (
     <div>
       <Header totalCart={contCart} openModal={() => openModal()} />
@@ -122,8 +136,20 @@ function App() {
         </button>
 
         <h1 className="modal-card-title">Carrinho</h1>
-        {buyCart.length === 0 && <div>Carrinho vazio</div>}
+
         <div className="modal-cards">
+          {modalBuy && (
+            <div className="modal-card-buy">
+              <img src={iconVerificate} />
+              <h1>Compra Realizada</h1>
+            </div>
+          )}
+          {buyCart.length === 0 && (
+            <div className="modal-card-null">
+              <img src={iconCart} />
+              <h1>Carrinho vazio</h1>
+            </div>
+          )}
           {buyCart.map((item, key) => (
             <div className="modal-card" key={key}>
               <div className="modal-img">
@@ -169,14 +195,16 @@ function App() {
             </div>
           ))}
         </div>
-        <h1>
+        <h1 className="modal-total-cart">
           Total: R$
           {totalCart.toLocaleString("pt-BR", {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
           })}
         </h1>
-        <button className="modal-btn-buy">Comprar</button>
+        <button className="modal-btn-buy" onClick={() => btnBuy()}>
+          Comprar
+        </button>
       </div>
     </div>
   );
