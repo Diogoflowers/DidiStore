@@ -104,7 +104,6 @@ function App() {
     <div>
       <Header totalCart={contCart} openModal={() => openModal()} />
       <div className="content">
-
         {cart.map((item, key) => (
           <Card
             key={key}
@@ -121,54 +120,55 @@ function App() {
         <button className="modal-exit" onClick={() => openModal()}>
           X
         </button>
-        
 
         <h1 className="modal-card-title">Carrinho</h1>
-        {buyCart.length === 0 && <div>Carrinho vazio</div> }
-        {buyCart.map((item, key) => (
-          <div className="modal-card" key={key}>
-            <div className="modal-img">
-              <img src={item.thumbnail} alt={item.title} />
-              <div className="modal-title">
-                <h1>{item.title}</h1>
+        {buyCart.length === 0 && <div>Carrinho vazio</div>}
+        <div className="modal-cards">
+          {buyCart.map((item, key) => (
+            <div className="modal-card" key={key}>
+              <div className="modal-img">
+                <img src={item.thumbnail} alt={item.title} />
+                <div className="modal-title">
+                  <h1>{item.title}</h1>
+                </div>
               </div>
-            </div>
 
-            <div className="modal-price">
-              <div className="modal-container-price">
-                <span className="price">
-                  R$
-                  {item.price.toLocaleString("pt-BR", {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                </span>
+              <div className="modal-price">
+                <div className="modal-container-price">
+                  <span className="price">
+                    R$
+                    {item.price.toLocaleString("pt-BR", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </span>
+                </div>
+                <div className="modal-price-btns">
+                  <button
+                    className="modal-"
+                    onClick={() => incrementProduct("decrease", key)}
+                    disabled={item.quantity === 1}
+                  >
+                    -
+                  </button>
+                  <span>{item.quantity}</span>
+                  <button
+                    className="modal--"
+                    onClick={() => incrementProduct("add", key)}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
-              <div className="modal-price-btns">
-                <button
-                  className="modal-"
-                  onClick={() => incrementProduct("decrease", key)}
-                  disabled={item.quantity === 1}
-                >
-                  -
-                </button>
-                <span>{item.quantity}</span>
-                <button
-                  className="modal--"
-                  onClick={() => incrementProduct("add", key)}
-                >
-                  +
-                </button>
-              </div>
-            </div>
 
-            <div className="modal-delete">
-              <button onClick={() => deleteProduct(key)}>
-                <MdDelete className="btn-delete" />
-              </button>
+              <div className="modal-delete">
+                <button onClick={() => deleteProduct(key)}>
+                  <MdDelete className="btn-delete" />
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
         <h1>
           Total: R$
           {totalCart.toLocaleString("pt-BR", {
@@ -176,6 +176,7 @@ function App() {
             maximumFractionDigits: 2,
           })}
         </h1>
+        <button className="modal-btn-buy">Comprar</button>
       </div>
     </div>
   );
