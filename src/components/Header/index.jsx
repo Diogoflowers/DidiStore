@@ -2,7 +2,13 @@ import "./styles.css";
 import logo from "../../img/logodidi.png";
 import { BsCart2 } from "react-icons/bs";
 import { FaSearchDollar } from "react-icons/fa";
-function Header({ totalCart, openModal }) {
+import { useState } from "react";
+function Header({ totalCart, openModal, searchProducts}) {
+  const [inputValue, setInputValue] = useState("")
+
+  const handleBtnSearch = () => {
+    searchProducts(inputValue)
+  }
   return (
     <div className="container">
       <div className="header">
@@ -10,8 +16,8 @@ function Header({ totalCart, openModal }) {
           <img src={logo} />
         </div>
         <div className="input-header">
-          <input type="text" placeholder="Busque seu produto!" />{" "}
-          <button className="btn-search">
+          <input type="text" placeholder="Busque seu produto!" onChange={(e) => setInputValue(e.target.value)}/>
+          <button className="btn-search" onClick={() => handleBtnSearch()}>
             <FaSearchDollar className="icon-search" />
           </button>
         </div>

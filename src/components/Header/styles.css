@@ -1,13 +1,3 @@
-@keyframes modalBuy {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
 .container {
   background: rgb(207, 182, 146);
 }
@@ -292,7 +282,6 @@
   transform: translate(-50%, -50%);
   z-index: 2;
   background: white;
-  animation: modalBuy 3seg ease-in-out;
 }
 
 .modal-total-cart {

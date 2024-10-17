@@ -108,15 +108,34 @@ function App() {
   };
 
   const btnBuy = () => {
+    if (buyCart.length === 0) return;
     const newArray = [];
     setBuyCart(newArray);
     setContCart(0);
     setModalBuy(true);
   };
 
+  const searchProducts = (item) => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(
+          `https://api.mercadolibre.com/sites/MLB/search?q=${item}`
+        );
+        setApi(res.data.results);
+      } catch (error) {
+        console.error("Erro ao buscar produtos:", error);
+      }
+    };
+    fetchData();
+  };
+
   return (
     <div>
-      <Header totalCart={contCart} openModal={() => openModal()} />
+      <Header
+        totalCart={contCart}
+        openModal={() => openModal()}
+        searchProducts={searchProducts}
+      />
       <div className="content">
         {cart.map((item, key) => (
           <Card
